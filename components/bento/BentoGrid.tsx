@@ -1,22 +1,32 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, useReducedMotion } from "framer-motion";
 
-export const bentoItemVariant: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { type: "spring", stiffness: 260, damping: 22 } 
-  },
-};
+export const useBentoVariants = () => {
+  const shouldReduceMotion = useReducedMotion();
 
-const containerVariant: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+  const bentoItemVariant: Variants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: shouldReduceMotion
+        ? { duration: 0 }
+        : { type: "spring", stiffness: 260, damping: 22 }
+    },
+  };
+
+  const containerVariant: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: shouldReduceMotion ? 0 : 0.08 } },
+  };
+
+  return { bentoItemVariant, containerVariant };
 };
 
 export default function BentoGrid({ children }: { children: React.ReactNode }) {
+  const { containerVariant } = useBentoVariants();
+
   return (
     <motion.main
       variants={containerVariant}

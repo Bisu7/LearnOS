@@ -20,6 +20,7 @@ export default function BottomNav() {
             onClick={() => setActiveItem(item.id)}
             className={cn(
               "relative flex flex-col items-center justify-center w-12 h-12 rounded-full group transition-colors",
+              "focus-visible:ring-2 focus-visible:ring-learnos-accent focus-visible:outline-none",
               isActive ? "text-learnos-accent" : "text-learnos-subtext hover:text-learnos-text"
             )}
           >

@@ -24,8 +24,9 @@ export const navItems: SidebarItem[] = [
   { id: "courses", label: "Courses", icon: BookOpen },
   { id: "progress", label: "Progress", icon: BarChart2 },
   { id: "calendar", label: "Calendar", icon: Calendar },
-  { id: "settings", label: "Settings", icon: Settings },
+  { id: "settings", icon: Settings, label: "Settings" },
 ];
+
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -41,7 +42,7 @@ export default function Sidebar() {
         setIsCollapsed(false);
       }
     };
-    
+
     // Set initial state based on window size
     handleResize();
 
@@ -61,7 +62,8 @@ export default function Sidebar() {
       initial={false}
       animate={{ width: isCollapsed ? 64 : 224 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="hidden md:flex flex-col h-screen fixed left-0 top-0 bg-learnos-surface border-r border-learnos-border z-40 overflow-hidden"
+      style={{ willChange: "width" }}
+      className="hidden md:flex flex-col h-screen sticky top-0 left-0 bg-learnos-surface border-r border-learnos-border z-40 overflow-hidden shrink-0"
     >
       {/* Header / Logo */}
       <div className="h-16 flex items-center justify-center border-b border-learnos-border shrink-0 px-4">
@@ -91,6 +93,7 @@ export default function Sidebar() {
               onClick={() => setActiveItem(item.id)}
               className={cn(
                 "relative flex items-center h-10 px-2 rounded-lg group transition-colors",
+                "focus-visible:ring-2 focus-visible:ring-learnos-accent focus-visible:outline-none",
                 isActive
                   ? "text-learnos-text"
                   : "text-learnos-subtext hover:text-learnos-text hover:bg-learnos-muted/20"
@@ -121,7 +124,7 @@ export default function Sidebar() {
       <div className="p-2 border-t border-learnos-border shrink-0">
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="flex items-center justify-center w-full h-10 rounded-lg text-learnos-subtext hover:text-learnos-text hover:bg-learnos-muted/30 transition-colors group"
+          className="flex items-center justify-center w-full h-10 rounded-lg text-learnos-subtext hover:text-learnos-text hover:bg-learnos-muted/30 transition-colors group focus-visible:ring-2 focus-visible:ring-learnos-accent focus-visible:outline-none"
         >
           {isCollapsed ? (
             <ChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />

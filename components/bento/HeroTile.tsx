@@ -1,11 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Flame } from "lucide-react";
-import { bentoItemVariant } from "./BentoGrid";
+import { useBentoVariants } from "./BentoGrid";
 import { cn } from "@/lib/utils";
 
 export default function HeroTile() {
+  const { bentoItemVariant } = useBentoVariants();
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.article
       variants={bentoItemVariant}
@@ -23,8 +26,8 @@ export default function HeroTile() {
       <motion.div
         className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-5"
         style={{ skewX: "-20deg" }}
-        animate={{ x: ["-100%", "100%"] }}
-        transition={{ repeat: Infinity, duration: 6, ease: "linear" }}
+        animate={{ x: shouldReduceMotion ? "100%" : ["-100%", "100%"] }}
+        transition={{ repeat: shouldReduceMotion ? 0 : Infinity, duration: shouldReduceMotion ? 0 : 6, ease: "linear" }}
       />
 
       <div className="relative z-10">

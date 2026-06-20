@@ -1,23 +1,34 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { bentoItemVariant } from "./BentoGrid";
+import { motion, useReducedMotion } from "framer-motion";
+import { useBentoVariants } from "./BentoGrid";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { BookOpen, TrendingUp, Flame } from "lucide-react";
+
+const iconMap: Record<string, React.ElementType> = {
+  BookOpen,
+  TrendingUp,
+  Flame,
+};
 
 interface StatsTileProps {
-  icon: React.ElementType;
+  iconName: string;
   value: string;
   label: string;
 }
 
-export default function StatsTile({ icon: Icon, value, label }: StatsTileProps) {
+export default function StatsTile({ iconName, value, label }: StatsTileProps) {
+  const { bentoItemVariant } = useBentoVariants();
+  const shouldReduceMotion = useReducedMotion();
+  const Icon = iconMap[iconName] || BookOpen;
+
   return (
     <motion.article
       variants={bentoItemVariant}
-      whileHover={{ scale: 1.015, borderColor: "#7c6af7" }}
+      whileHover={shouldReduceMotion ? {} : { scale: 1.015, borderColor: "#7c6af7" }}
       className={cn(
-        "col-span-6 md:col-span-4",
+        "col-span-12 md:col-span-6 lg:col-span-4",
         "relative rounded-2xl border border-learnos-border bg-learnos-surface p-6",
         "flex flex-col justify-between min-h-[160px]"
       )}

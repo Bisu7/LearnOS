@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
-import { bentoItemVariant } from "./BentoGrid";
+import { useBentoVariants } from "./BentoGrid";
 import { cn } from "@/lib/utils";
 
 // 7x5 grid = 35 values. 0=empty, 1=30% accent, 2=60% accent, 3=100% accent
@@ -15,6 +15,8 @@ const fixedActivityData = [
 ];
 
 export default function ActivityTile() {
+  const { bentoItemVariant } = useBentoVariants();
+
   return (
     <motion.article
       variants={bentoItemVariant}
@@ -33,7 +35,7 @@ export default function ActivityTile() {
       <div className="flex-1 flex items-center justify-center">
         <div className="grid grid-cols-7 gap-2">
           {fixedActivityData.map((val, idx) => {
-            let bgColorClass = "bg-[#1e1e2e]";
+            let bgColorClass = "bg-learnos-border";
             if (val === 1) bgColorClass = "bg-learnos-accent/30";
             if (val === 2) bgColorClass = "bg-learnos-accent/60";
             if (val === 3) bgColorClass = "bg-learnos-accent";
