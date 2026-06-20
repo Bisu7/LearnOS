@@ -1,15 +1,19 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, TargetAndTransition } from "framer-motion";
 import CourseGridSkeleton from "@/components/bento/CourseGridSkeleton";
 
+/**
+ * Fallback loading state displaying skeletons while dashboard data fetches.
+ * Client Component
+ */
 export default function Loading() {
   const shouldReduceMotion = useReducedMotion();
-  const skeletonPulse = {
+  const skeletonPulse: TargetAndTransition = {
     opacity: shouldReduceMotion ? 1 : [0.5, 1, 0.5],
     transition: {
       duration: shouldReduceMotion ? 0 : 1.6,
-      repeat: Infinity,
+      repeat: shouldReduceMotion ? 0 : Infinity,
       ease: "easeInOut",
     },
   };
